@@ -7,13 +7,13 @@ const cartRoute = require("./routes/cartRoute");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const cors = require("cors");
 dotenv.config();
+const app = express();
 app.use(
   cors({
     origin: "*",
   })
 );
 connectDB();
-const app = express();
 
 app.use(express.json()); //To accept JSON data;
 
