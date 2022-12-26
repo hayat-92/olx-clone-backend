@@ -5,9 +5,13 @@ const userRoutes = require("./routes/userRoutes");
 const productRoute = require("./routes/productRoute");
 const cartRoute = require("./routes/cartRoute");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
-
+const cors = require("cors");
 dotenv.config();
-
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 connectDB();
 const app = express();
 
