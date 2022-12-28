@@ -18,7 +18,6 @@ const getProducts = asyncHandler(async (req, res) => {
 
 const addProduct = asyncHandler(async (req, res) => {
   const seller = req.user.email;
-  console.log(seller, "Helllgttt");
   const { name, price, url, sold, category, details, phone } = req.body;
   const prod = await Product.create({
     name,
@@ -33,27 +32,9 @@ const addProduct = asyncHandler(async (req, res) => {
   if (!prod) {
     res.status(400);
     throw new Error("Failed to add Product");
+  } else {
+    res.send(prod);
   }
-  try {
-    userCart = await Cart.findOne({ email: req.user.email });
-  } catch (error) {
-    throw new Error("Internal Error Occured");
-  }
-
-  if (!userCart) {
-    userCart = await Cart.create({ email: req.user.email });
-  }
-
-  if (userCart) {
-    try {
-      userCart.cart.push({ product: prod });
-    } catch (error) {
-      throw new Error("Internal Error Occured");
-    }
-  }
-
-  await userCart.save();
-  res.send(userCart);
 });
 
 module.exports = { getProductId, getProducts, addProduct };
